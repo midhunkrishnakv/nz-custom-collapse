@@ -1,0 +1,13 @@
+{
+  "name": "nz-custom-collapse",
+  "version": "0.0.2",
+  "peerDependencies": {
+    "@angular/common": "^7.1.0",
+    "@angular/core": "^7.1.0"
+  },
+  "ngPackage": {
+    "lib": {
+      "entryFile": "public_api.ts"
+    }
+  }
+}
