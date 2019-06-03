@@ -3,17 +3,19 @@ import { Component,ChangeDetectorRef, OnInit } from '@angular/core';
 @Component({
   selector: 'nz-demo-date-picker-start-end',
   template: `
-    <nz-date-picker
-      
+    <br>
+    <br>
+    <nz-date-picker 
     [nzDisabledTime]="disabledDateStartTime"
       nzShowTime
       nzFormat="yyyy-MM-dd HH:mm:ss"
       (ngModelChange)="onStartChange($event)"
       [(ngModel)]="startValue"
       nzPlaceHolder="Start"
-      (nzOnOpenChange)="handleStartOpenChange($event)"
-    >
+      (nzOnOpenChange)="handleStartOpenChange($event)" >
     </nz-date-picker>
+    <br>
+    <br>
     <nz-date-picker
       [nzDisabledDate]="disabledEndDate"
       [nzDisabledTime]="disabledDateEndTime"
@@ -24,7 +26,9 @@ import { Component,ChangeDetectorRef, OnInit } from '@angular/core';
       (ngModelChange)="onEndChange($event)"
       nzPlaceHolder="End"
       (nzOnOpenChange)="handleEndOpenChange($event)"
-    >
+      (nzOnOk)="clickedOk($event)"
+      (click)="endOpen=true"
+      >
     </nz-date-picker>
   `,
   styles: [
@@ -181,14 +185,21 @@ export class AppComponent implements OnInit {
     if (!open) {
       this.endOpen = true;
     }
+    
     console.log('handleStartOpenChange', open, this.endOpen);
   }
 
   handleEndOpenChange(open: boolean): void {
     console.log("end open ",open);
-    if (!open) {
-      this.endOpen = false;
-    }
+    this.endOpen = !this.endOpen;
+    console.log('handleEndOpenChange', open, this.endOpen);
+    
+  }
+
+  clickedOk(status){
+    //this.endOpen = !this.endOpen;
+    console.log("clicked ob btn ",status);
+
   }
 
   
@@ -198,7 +209,7 @@ export class AppComponent implements OnInit {
       let oldValue:number = this.startValue.getDate()
       let dateDiff = date.getDate() - oldValue;
       
-      console.log('Date Difference is : ',typeof(this.endValue.setDate(this.endValue.getDate() + dateDiff)));
+      console.log('Date Difference is : ',this.endValue.setDate(this.endValue.getDate() + dateDiff));
       console.log('new Date is : ',);
       console.log('end value ',this.endValue);
     }
@@ -207,8 +218,8 @@ export class AppComponent implements OnInit {
   }
 
   onEndChange(date: Date): void {
+    
     this.endValue = date;
     this.cd.detectChanges();
   }
 }
-
